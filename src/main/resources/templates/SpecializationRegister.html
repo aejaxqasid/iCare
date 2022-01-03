@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org/"
+  xmlns:sec="https://www.thymeleaf.org/extras/spring-security5"
+>
+  <div th:replace="fragments/commonui :: header"></div>
+  <body>
+    <div th:replace="fragments/commonui :: nav"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-header bg-danger text-white text-center mt-2">
+          <h2>Specialization Register Page</h2>
+        </div>
+        <div class="card-body">
+          <form id="specForm" th:action="@{/spec/create}" method="post">
+            <!-- row#1-->
+            <div class="row">
+              <div class="col-2">CODE</div>
+              <div class="col-4">
+                <input type="text" id="code" name="code" class="form-control" />
+              </div>
+              <div class="col-4">
+                <span id="codeError"></span>
+              </div>
+            </div>
+
+            <!-- row#2-->
+            <div class="row">
+              <div class="col-2">NAME</div>
+              <div class="col-4">
+                <input type="text" id="name" name="name" class="form-control" />
+              </div>
+              <div class="col-4">
+                <span id="nameError"></span>
+              </div>
+            </div>
+
+            <!-- row#3-->
+            <div class="row">
+              <div class="col-2">DESCRIPTION</div>
+              <div class="col-4">
+                <textarea name="desc" id="desc" class="form-control"></textarea>
+              </div>
+              <div class="col-4">
+                <span id="descError"></span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+              CREATE<i class="fa fa-plus-square mx-1" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+      <script src="/js/validate_spec.js"></script>
+  </body>
+</html>

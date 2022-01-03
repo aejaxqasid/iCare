@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org/"
+  xmlns:sec="https://www.thymeleaf.org/extras/spring-security5"
+>
+  <div th:replace="fragments/commonui :: header"></div>
+  <body>
+    <div th:replace="fragments/commonui :: nav"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-header bg-danger text-white text-center mt-2">
+          <h2>Specialization Update Page</h2>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/spec/update}" method="post" th:object="${spec}">
+
+             <!-- row#0-->
+             <div class="row">
+              <div class="col-2">ID</div>
+              <div class="col-4">
+                <input type="text" id="id" name="id" th:field="*{id}" class="form-control" readonly />
+              </div>
+            </div>
+
+            <!-- row#1-->
+            <div class="row">
+              <div class="col-2">CODE</div>
+              <div class="col-4">
+                <input type="text" id="code" name="code" th:field="*{code}" class="form-control" />
+              </div>
+              <div class="col-4">
+                <span id="codeError"></span>
+              </div>
+            </div>
+
+            <!-- row#2-->
+            <div class="row">
+                <div class="col-2">NAME</div>
+                <div class="col-4">
+                  <input type="text" id="name" name="name" th:field="*{name}" class="form-control" />
+                </div>
+                <div class="col-4">
+                  <span id="nameError"></span>
+                </div>
+            </div>
+
+            <!-- row#3-->
+            <div class="row">
+                <div class="col-2">DESCRIPTION</div>
+                <div class="col-4">
+                    <textarea name="desc" id="desc" th:field="*{desc}" class="form-control"></textarea>
+                </div>
+                <div class="col-4">
+                  <span id="descError"></span>
+                </div>
+            </div>
+
+            <div class="row m-1">
+              <div class="col-2"></div>
+              <div class="col-4 align-center">
+                <button type="submit" class="btn btn-info">UPDATE<i class="fa fa-pencil-square mx-1" aria-hidden="true"></i></button>
+                <a th:href="@{/spec/all}" class="btn btn-danger">CANCEL<i class="fa fa-window-close" aria-hidden="true"></i></a>
+              </div>
+            </div>
+
+           
+
+          </form>
+        </div>
+        
+      </div>
+    </div>
+    <script src="/js/validate_spec.js"></script>
+  </body>
+</html>
