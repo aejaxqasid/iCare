@@ -1,6 +1,7 @@
 package com.shaikh.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.shaikh.exception.SpecializationNotFoundException;
 import com.shaikh.model.Specialization;
 import com.shaikh.repo.ISpecializationRepo;
 import com.shaikh.service.ISpecializationService;
+import com.shaikh.utils.CustomCollectionUtils;
 
 @Service
 public class SpecializationServiceImpl implements ISpecializationService {
@@ -48,6 +50,12 @@ public class SpecializationServiceImpl implements ISpecializationService {
 		Specialization spec = fetchSpec(id);
 		repo.delete(spec);
 		return "Specialization " + id + " Deleted";
+	}
+
+	@Override
+	public Map<Long, String> fetchSpecsIdAndName() {
+		List<Object[]> list = repo.findSpecsIdAndName();
+		return CustomCollectionUtils.convertToMap(list);
 	}
 
 }

@@ -10,7 +10,7 @@ $(document).ready(function () {
   var nameError = false;
   var descError = false;
 
-  //3. define valdate function
+  //3. define validate function
   function validate_code() {
     var code = $("#code").val();
     var exp = /^[A-Z]{4,8}$/;

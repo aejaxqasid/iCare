@@ -1,6 +1,7 @@
 package com.shaikh.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.shaikh.model.Specialization;
 
@@ -9,7 +10,7 @@ public interface ISpecializationService {
 	// 1. create spec
 	public String createSpec(Specialization spec);
 
-	// 2. fech spec
+	// 2. fetch spec
 	public Specialization fetchSpec(Long id);
 
 	// 3. fetch all spec
@@ -20,5 +21,7 @@ public interface ISpecializationService {
 
 	// 5. delete spec
 	public String deleteSpec(Long id);
+
+	public Map<Long, String> fetchSpecsIdAndName();
 
 }

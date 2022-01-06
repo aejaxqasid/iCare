@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/extras/spring-security5">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+  <div th:replace="fragments/commonui :: nav"></div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header bg-danger text-white text-center mt-2">
+        <h2>Doctor Register Page</h2>
+      </div>
+      <div class="card-body">
+        <form id="docForm" th:action="@{/doctor/update}" method="post" th:object="${doc}">
+
+          <!-- row#0-->
+          <div class="row">
+            <div class="col-2">ID</div>
+            <div class="col-4">
+              <input type="text" id="id" name="id" class="form-control" th:field="*{id}" readonly />
+            </div>
+          </div>
+
+          <!-- row#1-->
+          <div class="row">
+            <div class="col-2">FIRST NAME</div>
+            <div class="col-4">
+              <input type="text" id="firstName" name="firstName" class="form-control" th:field="*{firstName}" />
+            </div>
+            <div class="col-4">
+              <span id="fnameError"></span>
+            </div>
+          </div>
+
+          <!-- row#2-->
+          <div class="row">
+            <div class="col-2">LAST NAME</div>
+            <div class="col-4">
+              <input type="text" id="lastName" name="lastName" class="form-control" th:field="*{lastName}" />
+            </div>
+            <div class="col-4">
+              <span id="lnameError"></span>
+            </div>
+          </div>
+
+          <!-- row#3-->
+          <div class="row">
+            <div class="col-2">EMAIL</div>
+            <div class="col-4">
+              <input type="email" id="email" name="email" class="form-control" th:field="*{email}" />
+            </div>
+            <div class="col-4">
+              <span id="emailError"></span>
+            </div>
+          </div>
+
+          <!-- row#4-->
+          <div class="row">
+            <div class="col-2">SPECIALIZATION</div>
+            <div class="col-4">
+              <select id="spec" name="spec" class="form-control" th:field="*{spec.id}">
+                <option value="">-SELECT-</option>
+                <option th:each="spec: ${specs}" th:value="${spec.key}" th:text="${spec.value}"></option>
+              </select>
+            </div>
+            <div class="col-4">
+              <span id="specError"></span>
+            </div>
+          </div>
+
+          <!-- row#5-->
+          <div class="row">
+            <div class="col-2">GENDER</div>
+            <div class="col-4">
+              <!-- MALE -->
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="gender" value="male"
+                  th:field="*{gender}" />
+                <label class="form-check-label" for="gender"> Male </label>
+              </div>
+
+              <!-- FEMALE -->
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="gender" value="female"
+                  th:field="*{gender}" />
+                <label class="form-check-label" for="gender"> Female </label>
+              </div>
+            </div>
+            <div class="col-4">
+              <span id="genderError"></span>
+            </div>
+          </div>
+
+          <!-- row#6-->
+          <div class="row">
+            <div class="col-2">MOBILE</div>
+            <div class="col-4">
+              <input type="number" id="mobile" name="mobile" class="form-control" th:field="*{mobile}" />
+            </div>
+            <div class="col-4">
+              <span id="mobileError"></span>
+            </div>
+          </div>
+
+          <!-- row#7-->
+          <div class="row">
+            <div class="col-2">ADDRESS</div>
+            <div class="col-4">
+              <textarea name="addr" id="addr" class="form-control" th:field="*{addr}"></textarea>
+            </div>
+            <div class="col-4">
+              <span id="addrError"></span>
+            </div>
+          </div>
+
+          <div class="row m-1">
+            <div class="col-2"></div>
+            <div class="col-4 align-center">
+              <button type="submit" class="btn btn-info">UPDATE<i class="fa fa-pencil-square mx-1"
+                  aria-hidden="true"></i></button>
+              <a th:href="@{/doctor/all}" class="btn btn-danger">CANCEL<i class="fa fa-window-close"
+                  aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/js/validate_doctor.js}"></script>
+</body>
+
+</html>

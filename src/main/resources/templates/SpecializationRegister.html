@@ -47,9 +47,15 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-success">
-              CREATE<i class="fa fa-plus-square mx-1" aria-hidden="true"></i>
-            </button>
+            <div class="row m-1">
+              <div class="col-2"></div>
+              <div class="col-4 align-center">
+                <button type="submit" class="btn btn-info">CREATE<i class="fa fa-plus-square mx-1"
+                    aria-hidden="true"></i></button>
+                <a th:href="@{/spec/all}" class="btn btn-danger">CANCEL<i class="fa fa-window-close"
+                    aria-hidden="true"></i></a>
+              </div>
+              
           </form>
         </div>
       </div>
