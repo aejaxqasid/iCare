@@ -44,5 +44,8 @@ public class Doctor {
 	@OneToOne
 	@JoinColumn(name = "spec_id_fk_col")
 	private Specialization spec;
+	
+	//TODO : add doctors qualifications Set<String>  [MBBS, MD, ETC]
+	//private Set<String> degrees;
 
 }

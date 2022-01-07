@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/extras/spring-security5">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+  <div th:replace="fragments/commonui :: nav"></div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header bg-danger text-white text-center mt-2">
+        <h2>Appointment Data Page</h2>
+      </div>
+      <div class="card-body">
+
+        <a th:href="@{/appointment/create}" class="btn btn-success">CREATE<i class="fa fa-plus-square m-2"
+            aria-hidden="true"></i></a>
+
+        <table class="table table-hover">
+
+          <tr class="bg-info text-center h4">
+            <td>ID</td>
+            <td>DOCTOR</td>
+            <td>DATE</td>
+            <td>SLOT COUNT</td>
+            <td>DETAILS</td>
+            <td>FEE</td>
+            <td>OPERATIONS</td>
+          </tr>
+
+          <tr th:each="app: ${list}" class="text-center">
+            <td th:text="${app.id}"></td>
+            <td>[[${app.doctor.firstName + ' ' + app.doctor.lastName + ' [' + app.doctor.spec.name + ']'}]]</td>
+            <td th:text="${app.date}"></td>
+            <td th:text="${app.slots}"></td>
+            <td th:text="${app.details}" class="text-justify"></td>
+            <td th:text="${app.fee}"></td>
+            <td>
+              <a th:href="@{/appointment/update(id=${app.id})}" class="btn btn-warning m-1" style="width:7em">UPDATE<i
+                  class="fa fa-pencil-square" aria-hidden="true"></i></a>
+              <a th:href="@{/appointment/delete(id=${app.id})}" class="btn btn-danger m-1" style="width:7em">DELETE<i
+                  class="fa fa-trash-o" aria-hidden="true"></i></a>
+            </td>
+          </tr>
+          
+        </table>
+      </div>
+
+      <div class="card-footer" th:if="${msg!=null}">
+        <h3 class="text-success text-center" th:text="${msg}"></h3>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
