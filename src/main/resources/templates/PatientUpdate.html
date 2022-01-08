@@ -8,10 +8,10 @@
   <div class="container">
     <div class="card">
       <div class="card-header bg-danger text-white text-center mt-2">
-        <h2>Doctor Register Page</h2>
+        <h2>Patient Update Page</h2>
       </div>
       <div class="card-body">
-        <form id="docForm" th:action="@{/doctor/update}" method="post" th:object="${doc}">
+        <form id="docForm" th:action="@{/patient/create}" method="post" th:object="${patient}">
 
           <!-- row#0-->
           <div class="row">
@@ -19,31 +19,24 @@
             <div class="col-4">
               <input type="text" id="id" name="id" class="form-control" th:field="*{id}" readonly />
             </div>
+            <div class="col-4">
+              <span id="nameError"></span>
+            </div>
           </div>
 
           <!-- row#1-->
           <div class="row">
-            <div class="col-2">FIRST NAME</div>
+            <div class="col-2">FULL NAME</div>
             <div class="col-4">
-              <input type="text" id="firstName" name="firstName" class="form-control" th:field="*{firstName}" />
+              <input type="text" id="name" name="name" class="form-control" th:field="*{name}" />
             </div>
             <div class="col-4">
               <span id="nameError"></span>
             </div>
           </div>
 
-          <!-- row#2-->
-          <div class="row">
-            <div class="col-2">LAST NAME</div>
-            <div class="col-4">
-              <input type="text" id="lastName" name="lastName" class="form-control" th:field="*{lastName}" />
-            </div>
-            <div class="col-4">
-              <span id="lnameError"></span>
-            </div>
-          </div>
 
-          <!-- row#3-->
+          <!-- row#2-->
           <div class="row">
             <div class="col-2">EMAIL</div>
             <div class="col-4">
@@ -54,21 +47,18 @@
             </div>
           </div>
 
-          <!-- row#4-->
+          <!-- row#3-->
           <div class="row">
-            <div class="col-2">SPECIALIZATION</div>
+            <div class="col-2">MOBILE</div>
             <div class="col-4">
-              <select id="spec" name="spec" class="form-control" th:field="*{spec.id}">
-                <option value="">-SELECT-</option>
-                <option th:each="spec: ${specs}" th:value="${spec.key}" th:text="${spec.value}"></option>
-              </select>
+              <input type="number" id="mobile" name="mobile" class="form-control" th:field="*{mobile}" />
             </div>
             <div class="col-4">
-              <span id="specError"></span>
+              <span id="mobileError"></span>
             </div>
           </div>
 
-          <!-- row#5-->
+          <!-- row#4-->
           <div class="row">
             <div class="col-2">GENDER</div>
             <div class="col-4">
@@ -91,18 +81,7 @@
             </div>
           </div>
 
-          <!-- row#6-->
-          <div class="row">
-            <div class="col-2">MOBILE</div>
-            <div class="col-4">
-              <input type="number" id="mobile" name="mobile" class="form-control" th:field="*{mobile}" />
-            </div>
-            <div class="col-4">
-              <span id="mobileError"></span>
-            </div>
-          </div>
-
-          <!-- row#7-->
+          <!-- row#5-->
           <div class="row">
             <div class="col-2">ADDRESS</div>
             <div class="col-4">
@@ -113,20 +92,42 @@
             </div>
           </div>
 
+          <!-- row#6-->
+          <div class="row">
+            <div class="col-2">DISEASE</div>
+            <div class="col-4">
+              <input type="checkbox" name="disease" th:each=" item : ${patient.disease}" th:value="${item}"
+                th:text="${item}" checked>
+              <input type="checkbox" name="disease" id="disease1" value="Fever">Fever
+              <input type="checkbox" name="disease" id="disease2" value="Ulcer">Ulcer
+              <input type="checkbox" name="disease" id="disease3" value="Allergy">Allergy
+              <input type="checkbox" name="disease" id="disease4" value="BP">BP
+              <input type="checkbox" name="disease" id="disease5" value="Sugar">Sugar
+              <input type="checkbox" name="disease" id="other">Other
+              <input type="text" id="temp" name="temp" disabled>
+
+            </div>
+            <div class="col-4">
+              <span id="diseaseError"></span>
+            </div>
+          </div>
+
+
           <div class="row m-1">
             <div class="col-2"></div>
             <div class="col-4 align-center">
-              <button type="submit" class="btn btn-info">UPDATE<i class="fa fa-pencil-square mx-1"
+              <button type="submit" class="btn btn-warning">UPDATE<i class="fa fa-pencil-square mx-1"
                   aria-hidden="true"></i></button>
-              <a th:href="@{/doctor/all}" class="btn btn-danger">CANCEL<i class="fa fa-window-close"
+              <a th:href="@{/patient/all}" class="btn btn-danger">CANCEL<i class="fa fa-window-close"
                   aria-hidden="true"></i></a>
             </div>
           </div>
+
         </form>
       </div>
     </div>
   </div>
-  <script th:src="@{/js/validate_doctor.js}"></script>
+  <script th:src="@{/js/validate_patient.js}"></script>
 </body>
 
 </html>

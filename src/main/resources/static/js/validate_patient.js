@@ -1,7 +1,6 @@
 $(document).ready(function () {
   //1. hide error section
   $("#nameError").hide();
-  $("#lnameError").hide();
   $("#emailError").hide();
   $("#specError").hide();
   $("#genderError").hide();
@@ -10,7 +9,6 @@ $(document).ready(function () {
 
   //2. set error variable
   var nameError = false;
-  var lnameError = false;
   var emailError = false;
   var specError = false;
   var genderError = false;
@@ -18,8 +16,8 @@ $(document).ready(function () {
   var addrError = false;
 
   //3. validation function
-  function validate_first_name() {
-    let val = $("#firstName").val();
+  function validate_name() {
+    let val = $("#name").val();
     let regex = /^[A-Za-z\s]*$/;
     if (val == "") {
       $("#nameError").show();
@@ -38,28 +36,6 @@ $(document).ready(function () {
       nameError = true;
     }
     return nameError;
-  }
-
-  function validate_last_name() {
-    let val = $("#lastName").val();
-    let regex = /^[A-Za-z\s]*$/;
-    if (val == "") {
-      $("#lnameError").show();
-      $("#lnameError").html("*<strong>Name</strong> is required");
-      $("#lnameError").addClass("text-danger");
-      lnameError = false;
-    } else if (!regex.test(val)) {
-      $("#lnameError").show();
-      $("#lnameError").html(
-        "*Only English Aphabets and white space are allowed"
-      );
-      $("#lnameError").addClass("text-danger");
-      lnameError = false;
-    } else {
-      $("#lnameError").hide();
-      lnameError = true;
-    }
-    return lnameError;
   }
 
   function validate_email() {
@@ -151,8 +127,8 @@ $(document).ready(function () {
   }
 
   //4. activation listener
-  $("#firstName").keyup(function () {
-    validate_first_name();
+  $("#name").keyup(function () {
+    validate_name();
   });
 
   $("#lastName").keyup(function () {
@@ -179,34 +155,9 @@ $(document).ready(function () {
     validate_addr();
   });
 
-
-  //////////////////
-
-  $(document).ready(function(){
-
-    $("#other").change(function(){
-      if($(this).is(':checked')){
-        $("#temp").prop('disabled',false);
-      } else {
-        $(this).val('');
-        $("#temp").val('');
-        $("#temp").prop('disabled',true);
-      }
-    })
-
-    $("#temp").keyup(function(){
-      if($(this).val() != ''){
-        $("#other").val($(this).val())
-      }
-    })
-
-  })
-  ////////////////////////
-
   //5. validate
   $("#docForm").submit(function () {
-    validate_first_name();
-    validate_last_name();
+    validate_name();
     validate_email();
     validate_spec();
     validate_gender();
@@ -215,7 +166,6 @@ $(document).ready(function () {
 
     if (
       nameError &&
-      lnameError &&
       emailError &&
       specError &&
       genderError &&

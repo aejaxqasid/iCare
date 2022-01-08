@@ -12,57 +12,64 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shaikh.model.Specialization;
-import com.shaikh.service.ISpecializationService;
+import com.shaikh.model.Patient;
+import com.shaikh.service.IPatientService;
 
 @Controller
-@RequestMapping("/spec")
-public class SpecializationController {
+@RequestMapping("/patient")
+public class PatientController {
 
 	@Autowired
-	private ISpecializationService service;
+	private IPatientService service;
 
 	@GetMapping("/create")
-	public String create() {
-		return "SpecializationRegister";
+	public String create(Model model) {
+
+		return "PatientRegister";
 	}
 
 	@PostMapping("/create")
-	public String create(@ModelAttribute Specialization spec, RedirectAttributes rd) {
-		String msg = service.createSpec(spec);
+	public String create(@ModelAttribute Patient patient, RedirectAttributes rd) {
+
+		String msg = service.createPatient(patient);
 		rd.addFlashAttribute("msg", msg);
+
 		return "redirect:all";
+
 	}
+
+	// TODO: view one Patienttor profile
 
 	@GetMapping("/all")
 	public String viewAll(Model model) {
-		List<Specialization> list = service.fetchAllSpecs();
+		List<Patient> list = service.fetchAll();
 		model.addAttribute("list", list);
-		return "SpecializationData";
+
+		return "PatientData";
 	}
 
 	@GetMapping("/update")
 	public String update(@RequestParam Long id, Model model) {
-		Specialization spec = service.fetchSpec(id);
-		model.addAttribute("spec", spec);
-		return "SpecializationUpdate";
-		
+		Patient patient = service.fetchPatient(id);
+		model.addAttribute("patient", patient);
+
+		return "PatientUpdate";
 	}
 
 	@PostMapping("/update")
-	public String update(@ModelAttribute Specialization spec, RedirectAttributes rd) {
-		String msg = service.updateSpec(spec);
+	public String update(@ModelAttribute Patient patient, RedirectAttributes rd) {
+		String msg = service.updatePatient(patient);
 		rd.addFlashAttribute("msg", msg);
+
 		return "redirect:all";
 	}
-	
+
 	@GetMapping("/delete")
-	public String delete(@RequestParam Long  id, RedirectAttributes rd) {
-		String msg = service.deleteSpec(id);
+	public String delete(@RequestParam Long id, RedirectAttributes rd) {
+		String msg = service.deletePatient(id);
 		rd.addFlashAttribute("msg", msg);
+
 		return "redirect:all";
 	}
-	
-	//TODO : ajax call for the spec code already exist
 
 }
