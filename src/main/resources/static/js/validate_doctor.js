@@ -132,7 +132,7 @@ $(document).ready(function () {
 
   function validate_addr() {
     var val = $("#addr").val();
-    var regexp = /^[A-Za-z0-9\.\'\-\,\s]*$/;
+    var regexp = /^[A-Za-z0-9\.\'\-\,()\s]*$/;
     if (val == "") {
       $("#addrError").show();
       $("#addrError").html("*<strong>Address</strong> is required");
@@ -178,9 +178,6 @@ $(document).ready(function () {
   $("#addr").keyup(function () {
     validate_addr();
   });
-
-
-  //////////////////
 
   $(document).ready(function(){
 

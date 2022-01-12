@@ -13,50 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shaikh.constants.UserRole;
+import com.shaikh.model.Appointment;
 import com.shaikh.model.Doctor;
-import com.shaikh.model.UserInfo;
-import com.shaikh.service.IDoctorService;
-import com.shaikh.service.ISpecializationService;
-import com.shaikh.service.IUserInfoService;
+import com.shaikh.service.IAppointmentService;
+import com.shaikh.service.ISlotRequestService;
 
 @Controller
-@RequestMapping("/doctor")
-public class DoctorController {
-
-	@Autowired
-	private IDoctorService service;
+@RequestMapping("/slot")
+public class SlotRequestController {
 	
 	@Autowired
-	private IUserInfoService userInfoService;
-
+	private ISlotRequestService service;
+	
 	@Autowired
-	private ISpecializationService specService;
-
+	private IAppointmentService apmtService;
+		
 	@GetMapping("/create")
 	public String create(Model model) {
-		Map<Long, String> specs = specService.fetchSpecsIdAndName();
-		model.addAttribute("specs", specs);
-
+		List<Appointment> appointments = apmtService.fetchAllApmts();
+		model.addAttribute("appointments", appointments);
+		
 		return "DoctorRegister";
 	}
 
 	@PostMapping("/create")
 	public String create(@ModelAttribute Doctor doc, RedirectAttributes rd) {
-		String msg = service.createDoc(doc);
-		rd.addFlashAttribute("msg", msg);
 		
-		UserInfo user = new UserInfo();
-		user.setDisplayName(doc.getFirstName()+ " " +doc.getLastName());
-		user.setUsername(doc.getEmail());
-		user.setPassword("pass");  // TODO : generate some random password and sent it via mail to registered email
-		user.setRole(UserRole.DOCTOR.name());
-		
-		
-		userInfoService.createUserInfo(user);
-
-		
-		//TODO : mail doctor his login credentials
 		return "redirect:all";
 	}
 	
@@ -64,35 +46,25 @@ public class DoctorController {
 
 	@GetMapping("/all")
 	public String viewAll(Model model) {
-		List<Doctor> list = service.fetchAll();
-		model.addAttribute("list", list);
+		
 
 		return "DoctorData";
 	}
 
 	@GetMapping("/update")
 	public String update(@RequestParam Long id, Model model) {
-		Doctor doctor = service.fetchDoc(id);
-		model.addAttribute("doc", doctor);
-		
-		Map<Long, String> specs = specService.fetchSpecsIdAndName();
-		model.addAttribute("specs", specs);
 		
 		return "DoctorUpdate";
 	}
 	
 	@PostMapping("/update")
 	public String update(@ModelAttribute Doctor doctor, RedirectAttributes rd) {
-		String msg = service.updateDoc(doctor);
-		rd.addFlashAttribute("msg", msg);
 		
 		return "redirect:all";
 	}
 	
 	@GetMapping("/delete")
 	public String delete(@RequestParam Long id, RedirectAttributes rd) {
-		String msg = service.deleteDoc(id);
-		rd.addFlashAttribute("msg", msg);
 		
 		return "redirect:all";		
 	}

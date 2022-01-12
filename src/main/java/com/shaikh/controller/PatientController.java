@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shaikh.constants.UserRole;
 import com.shaikh.model.Patient;
+import com.shaikh.model.UserInfo;
 import com.shaikh.service.IPatientService;
+import com.shaikh.service.IUserInfoService;
 
 @Controller
 @RequestMapping("/patient")
@@ -21,6 +24,9 @@ public class PatientController {
 
 	@Autowired
 	private IPatientService service;
+	
+	@Autowired
+	private IUserInfoService userInfoService;
 
 	@GetMapping("/create")
 	public String create(Model model) {
@@ -33,6 +39,18 @@ public class PatientController {
 
 		String msg = service.createPatient(patient);
 		rd.addFlashAttribute("msg", msg);
+		
+		UserInfo user = new UserInfo();
+		user.setDisplayName(patient.getName());
+		user.setUsername(patient.getEmail());
+		user.setPassword("pass");  // TODO : generate some random password and sent it via mail to registered email
+		user.setRole(UserRole.PATIENT.name());
+		
+		
+		userInfoService.createUserInfo(user);
+
+		
+		//TODO : mail doctor his login credentials
 
 		return "redirect:all";
 

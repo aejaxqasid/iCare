@@ -7,8 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -18,9 +20,15 @@ import lombok.Data;
 @Entity
 @Table(name = "patient_tab")
 public class Patient {
+	
+	@SequenceGenerator(
+			name = "patient_seq_gen", 
+			initialValue = 9000, 
+			allocationSize = 1, 
+			sequenceName = "patient_seq")
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_seq_gen")
 	@Column(name = "patient_id_col")
 	private Long id;
 
