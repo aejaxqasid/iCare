@@ -47,7 +47,7 @@ $(document).ready(function () {
       $("#slotsError").html("*required");
       $("#slotsError").addClass("text-danger");
       slotsError = false;
-    } else if (val <= 0) {
+    } else if (val < 0) {
       $("#slotsError").show();
       $("#slotsError").html("*number must be greater than zero");
       $("#slotsError").addClass("text-danger");

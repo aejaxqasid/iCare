@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/extras/spring-security5">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+  <div th:replace="fragments/commonui :: nav"></div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header bg-danger text-white text-center mt-2">
+        <h2>Slot Data Page</h2>
+      </div>
+      <div class="card-body">
+
+        <div class="row" sec:authorize="hasAuthority('ADMIN')">
+          <div class="col">
+            <select name="selectId" id="selectId">
+              <option value="PENDING">PENDING</option>
+              <option value="ACCEPTED">ACCEPTED</option>
+              <option value="REJECTED">REJECTED</option>
+              <option value="CANCELLED">CANCELLED</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- PATIENT SLOTS TABLE-->
+        <table id="patientSlotTable" class="table table-hover" sec:authorize="hasAuthority('PATIENT')">
+          <tr class="bg-info text-center h4">
+            <td>ID</td>
+            <td>DOCTOR</td>
+            <td>SPECIALIZATION</td>
+            <td>PATIENT</td>
+            <td>DATE</td>
+            <td>STATUS</td>
+            <td>OPERATIONS</td>
+          </tr>
+          <tr th:each="slot: ${slots}" class="text-center h6">
+            <td th:text="${slot.id}"></td>
+            <td>[[${slot.appointment.doctor.firstName + ' ' + slot.appointment.doctor.lastName}]]</td>
+            <td>[[${slot.appointment.doctor.spec.name}]]</td>
+            <td>[[${slot.patient.name}]]</td>
+            <td>[[${slot.appointment.date}]]</td>
+
+            <td th:if="${slot.status == 'ACCEPTED'}" class="text-success">[[${slot.status}]]</td>
+            <td th:if="${slot.status == 'PENDING'}" class="text-primary">[[${slot.status}]]</td>
+            <td th:if="${slot.status == 'REJECTED'}" class="text-danger">[[${slot.status}]]</td>
+            <td th:if="${slot.status == 'CANCELLED'}" class="text-danger">[[${slot.status}]]</td>
+            <td th:if="${slot.status == 'ACCEPTED'}">
+              <a th:href="@{/slot/cancel(slotid=${slot.id})}" class="btn btn-danger">CANCEL</a>
+            </td>
+            <td th:if="${slot.status == 'CANCELLED'}">
+              <a th:href="@{/slot/reclaim(slotid=${slot.id})}" class="btn btn-primary">RECLAIM</a>
+            </td>
+          </tr>
+        </table>
+
+        <!-- PENDING SLOTS TABLE-->
+        <table id="pendingSlotTable" class="table table-hover" sec:authorize="hasAuthority('ADMIN')">
+          <tr class="bg-info text-center h4">
+            <td>ID</td>
+            <td>DOCTOR</td>
+            <td>SPECIALIZATION</td>
+            <td>PATIENT</td>
+            <td>DATE</td>
+            <td>STATUS</td>
+            <td>OPERATIONS</td>
+          </tr>
+          <tr th:each="slot, i: ${slots}" th:if="${slot.status == 'PENDING'}" class="text-center h6">
+            <td th:text="${i.count}"></td>
+            <td>[[${slot.appointment.doctor.firstName + ' ' + slot.appointment.doctor.lastName}]]</td>
+            <td>[[${slot.appointment.doctor.spec.name}]]</td>
+            <td>[[${slot.patient.name}]]</td>
+            <td>[[${slot.appointment.date}]]</td>
+
+            <td class="text-primary">[[${slot.status}]]</td>
+
+            <td>
+              <a th:href="@{/slot/accept(slotid=${slot.id})}" class="btn btn-success">ACCEPT</a>
+              <a th:href="@{/slot/reject(slotid=${slot.id})}" class="btn btn-danger">REJECT</a>
+            </td>
+          </tr>
+        </table>
+
+        <!-- ACCEPTED SLOTS TABLE-->
+        <table id="acceptedSlotTable" class="table table-hover" sec:authorize="hasAuthority('ADMIN')">
+          <tr class="bg-info text-center h4">
+            <td>ID</td>
+            <td>DOCTOR</td>
+            <td>SPECIALIZATION</td>
+            <td>PATIENT</td>
+            <td>DATE</td>
+            <td>STATUS</td>
+            <td>OPERATIONS</td>
+          </tr>
+          <tr th:each="slot, i: ${slots}" th:if="${slot.status == 'ACCEPTED'}" class="text-center h6">
+            <td th:text="${i.count}"></td>
+            <td>[[${slot.appointment.doctor.firstName + ' ' + slot.appointment.doctor.lastName}]]</td>
+            <td>[[${slot.appointment.doctor.spec.name}]]</td>
+            <td>[[${slot.patient.name}]]</td>
+            <td>[[${slot.appointment.date}]]</td>
+
+            <td class="text-success">[[${slot.status}]]</td>
+
+            <td>
+              <a th:href="@{/slot/cancel(slotid=${slot.id})}" class="btn btn-danger">CANCEL</a>
+            </td>
+          </tr>
+        </table>
+
+        <!-- REJECTED SLOTS TABLE-->
+        <table id="rejectedSlotTable" class="table table-hover" sec:authorize="hasAuthority('ADMIN')">
+          <tr class="bg-info text-center h4">
+            <td>ID</td>
+            <td>DOCTOR</td>
+            <td>SPECIALIZATION</td>
+            <td>PATIENT</td>
+            <td>DATE</td>
+            <td>STATUS</td>
+            <td>OPERATIONS</td>
+          </tr>
+          <tr th:each="slot, i: ${slots}" th:if="${slot.status == 'REJECTED'}" class="text-center h6">
+            <td th:text="${i.count}"></td>
+            <td>[[${slot.appointment.doctor.firstName + ' ' + slot.appointment.doctor.lastName}]]</td>
+            <td>[[${slot.appointment.doctor.spec.name}]]</td>
+            <td>[[${slot.patient.name}]]</td>
+            <td>[[${slot.appointment.date}]]</td>
+
+            <td  class="text-danger">[[${slot.status}]]</td>
+
+            <td>
+                <a th:href="@{/slot/accept(slotid=${slot.id})}" class="btn btn-success">ACCEPT</a>
+            </td>
+          </tr>
+        </table>
+
+        <!-- CANCELLED SLOTS TABLE-->
+        <table id="cancelledSlotTable" class="table table-hover" sec:authorize="hasAuthority('ADMIN')">
+          <tr class="bg-info text-center h4">
+            <td>ID</td>
+            <td>DOCTOR</td>
+            <td>SPECIALIZATION</td>
+            <td>PATIENT</td>
+            <td>DATE</td>
+            <td>STATUS</td>
+            <td>OPERATIONS</td>
+          </tr>
+          <tr th:each="slot, i: ${slots}" th:if="${slot.status == 'CANCELLED'}" class="text-center h6">
+            <td th:text="${i.count}"></td>
+            <td>[[${slot.appointment.doctor.firstName + ' ' + slot.appointment.doctor.lastName}]]</td>
+            <td>[[${slot.appointment.doctor.spec.name}]]</td>
+            <td>[[${slot.patient.name}]]</td>
+            <td>[[${slot.appointment.date}]]</td>
+
+            <td class="text-danger">[[${slot.status}]]</td>
+
+            <td>
+              <button class="btn btn-success disabled" >ACCEPT</button>
+              <button class="btn btn-danger disabled">REJECT</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{/js/slot_data_script.js}"></script>
+</body>
+
+</html>

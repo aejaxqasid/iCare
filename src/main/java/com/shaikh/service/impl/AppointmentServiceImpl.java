@@ -3,6 +3,8 @@ package com.shaikh.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,16 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		repo.delete(apmt);
 		return "Appointment " + id + " Deleted";
 	}
-
+	
+	@Override
+	@Transactional
+	public void setSlotCountPlus(Long id) {
+		repo.updateSlotCountPlus(id);
+	}
+	
+	@Override
+	@Transactional
+	public void setSlotCountMinus(Long id) {
+		repo.updateSlotCountMinus(id);
+	}
 }

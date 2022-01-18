@@ -40,16 +40,19 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 		
 		.antMatchers("/spec/**").hasAuthority(ADMIN)
 		.antMatchers("/doctor/**").hasAuthority(ADMIN)
-		.antMatchers("/patient/**").hasAuthority(ADMIN)
+		.antMatchers("/patient/all","/patient/update","/patient/delete").hasAuthority(ADMIN)
+		.antMatchers("/appointment/**").hasAuthority(ADMIN)
+		
+		.antMatchers("/slot/all").hasAnyAuthority(ADMIN, DOCTOR, PATIENT)
+		
+		.antMatchers("/slot/book").hasAnyAuthority(ADMIN, PATIENT)
+		.antMatchers("/slot/book-patient").hasAuthority(PATIENT)
+		
+		
 		
 		.antMatchers("/patinet/update").hasAuthority(DOCTOR)
 		
 		.antMatchers("/patient/**").hasAuthority(PATIENT)
-		
-		
-		           
-		
-		
 		
 		.anyRequest().authenticated()
 		

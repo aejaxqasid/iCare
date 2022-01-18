@@ -50,5 +50,14 @@ public class PatientServiceImpl implements IPatientService {
 		repo.delete(patient);
 		return "Patient " + id + " Deleted";
 	}
+	
+	@Override
+	public Patient fetchPatientByEmail(String email) {
+		Optional<Patient> opt = repo.findByEmail(email);
+		if(opt.isPresent())
+			return opt.get();
+		else
+			throw new PatientNotFoundException("Patient with email : " + email + " not found!");
+	}
 
 }

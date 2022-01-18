@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/extras/spring-security5">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+    <div th:replace="fragments/commonui :: nav"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-danger text-white text-center mt-2">
+                <h2>Slot Register By Admin Page</h2>
+            </div>
+            <div class="card-body">
+                <form id="form" th:action="@{/slot/book-admin}" method="get">
+                    <table class="table table-hover">
+                        <input type="hidden" name="appid" id="appid" th:value="${appointment.id}">
+                        <tr>
+                            <td colspan="2" class="text-center bg-info">PATIENT DETAILS</td>
+                        </tr>
+                        <tr>
+                            <td>PATINET EMAIL</td>
+                            <td>
+                                <input type="text" name="patientId" id="patientId" class="form-control">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span id="patientIdError" class="text-center"></span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-hover">
+                        <tr>
+                            <td colspan="" class="text-center bg-info">APPOINTMENT DETAILS</td>
+                        </tr>
+                        <tr>
+                            <td>DOCTOR NAME</td>
+                            <td>[[${appointment.doctor.firstName + ' ' + appointment.doctor.lastName}]]</td>
+                        </tr>
+                        <tr>
+                            <td>SPECIALIZATION</td>
+                            <td>[[${appointment.doctor.spec.name}]]</td>
+                        </tr>
+                        <tr>
+                            <td>DATE</td>
+                            <td>[[${appointment.date}]]</td>
+                        </tr>
+                        <tr>
+                            <td>FEE</td>
+                            <td>[[${appointment.fee}]]</td>
+                        </tr>
+                        <tr>
+                            <td>DETAILS</td>
+                            <td>[[${appointment.details}]]</td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-success" type="submit">CONFIRM</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+
+        $("#patientIdError").hide();
+
+        let patientIdError = false;
+
+        function validate_patient_id() {
+            let val = $("#patientId").val();
+            if (val == "") {
+                $("#patientIdError").show();
+                $("#patientIdError").html("*<strong>Patient username </strong> is required");
+                $("#patientIdError").addClass("text-danger");
+                patientIdError = false;
+            } else {
+                $("#patientIdError").hide();
+                patientIdError = true;
+            }
+            return patientIdError;
+        }
+
+        $("#patientId").keyup(function () {
+            validate_patient_id();
+            //ajax validation
+        });
+
+        $("#form").submit(function () {
+            validate_patient_id();
+            if (patientIdError) return true;
+            else return false;
+        });
+    });
+</script>
+
+</html>

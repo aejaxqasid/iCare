@@ -9,13 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.shaikh.constants.SlotStatus;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "slot_request_tab")
+@Table(name = "slot_request_tab", 
+		uniqueConstraints = @UniqueConstraint(columnNames = {"paitent_id_fk_col","appointment_id_fk_col"}))
 
 @Data
 public class SlotRequest {
@@ -38,9 +40,9 @@ public class SlotRequest {
 	
 	
 	@OneToOne
-	@JoinColumn(name = "apointment_id_fk_col")
-	private Appointment apointment;
+	@JoinColumn(name = "appointment_id_fk_col")
+	private Appointment appointment;
 	
 	@Column(name = "slot_status_col")
-	private String status = SlotStatus.PENDING.name();
+	private String status;
 }

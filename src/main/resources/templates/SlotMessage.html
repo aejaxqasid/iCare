@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="https://www.thymeleaf.org/"
+  xmlns:sec="https://www.thymeleaf.org/extras/spring-security5"
+>
+  <div th:replace="fragments/commonui :: header"></div>
+  <body>
+    <div th:replace="fragments/commonui :: nav"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-header bg-danger text-white text-center mt-2">
+          <h2>Slot Data Page</h2>
+        </div>
+        <div class="card-body">
+          <h4 th:text="${message}" class="text-center text-primary"></h4>
+        </div>
+        <div class="card-footer" th:if="${msg!=null}">
+            <h3 class="text-success text-center" th:text="${msg}"></h3>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

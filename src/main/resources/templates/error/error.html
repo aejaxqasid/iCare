@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/extras/spring-security5">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+  <div th:replace="fragments/commonui :: nav"></div>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header bg-danger text-white text-center mt-2">
+        <h2>Error Page</h2>
+      </div>
+      <div class="card-body">
+        <form id="loginForm" th:action="@{/logout}">
+          <div class="row m-1">
+            <div class="col-4 align-center">
+              <button type="submit" class="btn btn-info">LOGOUT<i class="fa fa-plus-square mx-1"
+                  aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+        </form>
+    </div>
+  </div>
+  <script th:src="@{/js/validate_login.js}"></script>
+</body>
+
+</html>

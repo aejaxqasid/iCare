@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/extras/spring-security5">
+<div th:replace="fragments/commonui :: header"></div>
+
+<body>
+    <div th:replace="fragments/commonui :: nav"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-danger text-white text-center mt-2">
+                <h2>Slot Register By Patient Page</h2>
+            </div>
+            <div class="card-body">
+
+                <table class="table table-hover">
+                    <tr>
+                        <td colspan="2" class="text-center bg-info">PATIENT DETAILS</td>
+                    </tr>
+                    <tr>
+                        <td>PATINET NAME</td>
+                        <td>[[${patient.name}]]</td>
+                    </tr>
+                    <tr>
+                        <td>GENDER</td>
+                        <td>[[${patient.gender}]]</td>
+                    </tr>
+                </table>
+
+                <table class="table table-hover">
+                    <tr>
+                        <td colspan="2" class="text-center bg-info">APPOINTMENT DETAILS</td>
+                    </tr>
+                    <tr>
+                        <td>DOCTOR NAME</td>
+                        <td>[[${appointment.doctor.firstName + ' ' + appointment.doctor.lastName}]]</td>
+                    </tr>
+                    <tr>
+                        <td>SPECIALIZATION</td>
+                        <td>[[${appointment.doctor.spec.name}]]</td>
+                    </tr>
+                    <tr>
+                        <td>DATE</td>
+                        <td>[[${appointment.date}]]</td>
+                    </tr>
+                    <tr>
+                        <td>FEE</td>
+                        <td>[[${appointment.fee}]]</td>
+                    </tr>
+                    <tr>
+                        <td>DETAILS</td>
+                        <td>[[${appointment.details}]]</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a th:href="@{/slot/book-patient(appid=${appointment.id})}"
+                                class="btn btn-success">CONFIRM</a>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="card-footer" th:if="${msg!=null}">
+                <h3 class="text-success text-center" th:text="${msg}"></h3>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

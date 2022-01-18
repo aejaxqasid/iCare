@@ -16,4 +16,6 @@ public interface IPatientService {
 	public String updatePatient(Patient patient);
 	
 	public String deletePatient(Long id);
+	
+	public Patient fetchPatientByEmail(String email);
 }

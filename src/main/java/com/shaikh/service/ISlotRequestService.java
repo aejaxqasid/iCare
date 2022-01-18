@@ -2,6 +2,8 @@ package com.shaikh.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
+
 import com.shaikh.model.SlotRequest;
 
 public interface ISlotRequestService {
@@ -20,5 +22,11 @@ public interface ISlotRequestService {
 
 	// 5. delete SlotRequest
 	public String deleteSlotRequest(Long id);
+	
+	public List<SlotRequest> fetchAllPatientSlot(String email);
+	
+	public List<SlotRequest> fetchAllDoctorSlot(String email);
+	
+	public void updateSlotStatus(String status, Long id);
 
 }

@@ -66,6 +66,33 @@
           </div>
         </li>
         <!--Patient for ADMIN END-->
+
+        <!--Appointments for ADMIN START-->
+        <li class="nav-item dropdown" sec:authorize="hasAuthority('ADMIN')">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Appointment
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" th:href="@{/appointment/create}">Add</a>
+            <a class="dropdown-item" th:href="@{/appointment/all}">View All</a>
+          </div>
+        </li>
+        <!--Appointments for ADMIN END-->
+
+         <!--Slots for ADMIN START-->
+         <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Slots
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" th:href="@{/slot/all}">Book</a>
+            <a class="dropdown-item" th:href="@{/slot/view-all}" sec:authorize="hasAuthority('ADMIN')">View All</a>
+            <a class="dropdown-item" th:href="@{/slot/view-all}" sec:authorize="hasAuthority('PATIENT')">View Mine</a>
+          </div>
+        </li>
+        <!--Slots for ADMIN END-->
         
          <!--Patient for DOCTOR START-->
          <li class="nav-item dropdown" sec:authorize="hasAuthority('DOCTOR')">
@@ -88,7 +115,7 @@
         <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <span class="text-white" th:text="${session.user.displayName}"></span>
+            <span class="text-white" th:if="${session.user != null}" th:text="${session.user.displayName}"></span>
             <span sec:authentication="principal.authorities">ROLE</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
